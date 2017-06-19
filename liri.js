@@ -7,10 +7,9 @@ console.log('');
 // grab user input
 var input = process.argv[2];
 
-// USER TWITTER
-if (input === 'my-tweets') {
 
-    console.log('Your TWEETS');
+// TWITTER FUNCTION
+function Twitter() {
 
     var Twitter = require('twitter');
     var keys = require('./keys.js');
@@ -30,30 +29,13 @@ if (input === 'my-tweets') {
         }
         for (var i = 0; i < tweets.length; i++) {
             console.log('---------------------');
-            console.log('');
             console.log(' * ' + tweets[i].text);
-            console.log('');
             console.log('---------------------');
         }
     }
 }
 
-// SONG SPOTIFY
-if (input === 'spotify-this-song') {
-
-    console.log('Your Song...');
-    console.log('');
-
-    var song = process.argv[3];
-
-    // var fs = require("fs");
-    //
-    // fs.readFile('random.txt', 'utf8', function (error, data) {
-    //
-    //     console.log(data)
-    // });
-
-// } else if (input === 'spotify-this-song') {
+function Spotify() {
 
     var Spotify = require('node-spotify-api');
     var spotify = new Spotify({
@@ -68,18 +50,16 @@ if (input === 'spotify-this-song') {
         }
         // console.log(JSON.stringify(data.tracks.items, null, 2));
         // console.log(request);
+        console.log('--------------------------');
         console.log('Artist : ' + data.tracks.items[1].album.artists[0].name);
         console.log('Song\'s name: ' + data.tracks.items[1].name);
         console.log('Album name: ' + data.tracks.items[1].album.name);
-        console.log('Sample: ' + data.tracks.items[1].preview_url)
+        console.log('Sample: ' + data.tracks.items[1].preview_url);
+        console.log('--------------------------');
     });
 }
 
-// USER MOVIE
-else if (input === 'movie-this') {
-
-    console.log('Your MOVIE ...');
-    console.log('');
+function Movie() {
 
     var request = require('request');
     var movie = process.argv[3];
@@ -94,6 +74,7 @@ else if (input === 'movie-this') {
 
             // console.log(dataBody);
             // console.log('');
+            console.log('--------------------------');
             console.log('Title: ' + dataBody.Title);
             console.log('Year: ' + dataBody.Year);
             console.log('Rated: ' + dataBody.Rated);
@@ -101,8 +82,39 @@ else if (input === 'movie-this') {
             console.log('Language: ' + dataBody.Language);
             console.log('Plot: ' + dataBody.Plot);
             console.log('Actors: ' + dataBody.Actors);
+            console.log('--------------------------');
         }
     });
+}
+
+// USER TWITTER
+if (input === 'my-tweets') {
+
+    console.log('Your TWEETS');
+
+    Twitter();
+}
+
+// SONG SPOTIFY
+if (input === 'spotify-this-song') {
+
+    console.log('Your Song...');
+    console.log('');
+
+    var song = process.argv[3];
+
+    Spotify();
+}
+
+// USER MOVIE
+else if (input === 'movie-this') {
+
+    console.log('Your MOVIE ...');
+    console.log('');
+
+    Movie();
+
+    console.log(input)
 }
 
 // USER DEFAULT
@@ -112,16 +124,11 @@ else if (input === 'do-what-it-says') {
 
     fs.readFile("random.txt", "utf8", function (error, data) {
 
-        var dataArr = data.split(",");
-    console.log(dataArr);
+         var dataNew = data.split(',');
 
-    for (var i = 0; i < dataArr.length; i++)
+        input = dataNew[1];
 
-        console.log(i)
-
+        Spotify();
     });
 }
-//
-// else if (input === '') {
-//     .type(node liri^@)
-// }
+
